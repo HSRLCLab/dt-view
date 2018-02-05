@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Visualisation @click="click"/>
+    <Visualisation @detailSelected="detailSelected"/>
     <Details :details="details"/>
   </div>
 </template>
@@ -12,9 +12,24 @@ import Details from './components/Details.vue';
 
 export default {
   name: 'app',
+  data() {
+    return {
+      details: [
+        { text: 'detail 1' },
+        { text: 'detail 2' },
+        { text: 'detail 3' },
+        { text: 'detail 4' }
+      ]
+    };
+  },
   components: {
     Visualisation,
     Details
+  },
+  methods: {
+    detailSelected(event) {
+      console.log('test>', event);
+    }
   }
 };
 </script>
