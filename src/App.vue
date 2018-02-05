@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Visualisation @click="click"/>
+    <Details :details="details"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import 'normalize.css';
+import Visualisation from './components/Visualisation.vue';
+import Details from './components/Details.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Visualisation,
+    Details
   }
-}
+};
 </script>
 
-<style>
+<style lang="scss">
+html {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-y: scroll;
+  height: 100%;
+}
+</style>
+
+
+<style lang="scss" scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: grid;
+  grid-template-areas: 'visualisation details';
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
 }
 </style>
