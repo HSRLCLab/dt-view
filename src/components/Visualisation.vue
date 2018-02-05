@@ -19,7 +19,6 @@ export default {
   name: 'Visualisation',
   mounted() {
     const ref = this.$refs.three;
-    console.log({ ref });
     const { clientHeight: height, clientWidth: width } = ref;
 
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
@@ -40,6 +39,7 @@ export default {
 
     const loader = new THREE.VRMLLoader();
     loader.load(model2, function(object) {
+      console.log(object);
       scene.add(object);
     });
 
