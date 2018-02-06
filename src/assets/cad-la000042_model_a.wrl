@@ -1,0 +1,122 @@
+#VRML V2.0 utf8
+
+DEF Member_2_0 Transform { translation 78.510091 15.772238 -32.000000
+            rotation 0.971456 -0.167740 -0.167740 1.599752
+            children [
+ Inline { url "45590-4198367_model_p1.wrl" }
+] }
+
+DEF Member_2_1 Transform { translation 78.510091 -15.772238 -32.000000
+            rotation 0.971456 0.167740 0.167740 1.599752
+            children [
+ Inline { url "45590-4198367_model_p1.wrl" }
+] }
+
+DEF Member_2_2 Transform { translation 74.741701 -17.113593 -36.000000
+            rotation 0.000000 0.000000 1.000000 0.341965
+            children [
+ Inline { url "32062-4142865_model_p1.wrl" }
+] }
+
+DEF Member_2_3 Transform { translation 74.741701 17.113593 -36.000000
+            rotation -0.000000 0.000000 -1.000000 0.341965
+            children [
+ Inline { url "32062-4142865_model_p1.wrl" }
+] }
+
+DEF Member_2_4 Transform { translation 52.131359 25.161727 -28.000000
+            rotation 0.000000 0.000000 1.000000 0.088220
+            children [
+ Inline { url "3673-4211807_model_p1.wrl" }
+] }
+
+DEF Member_2_5 Transform { translation 52.131359 -25.161727 -20.000000
+            rotation 0.000000 0.000000 1.000000 0.149138
+            children [
+ Inline { url "3673-4211807_model_p1.wrl" }
+] }
+
+DEF Member_2_6 Transform { translation 32.360484 0.000000 -36.050000
+            rotation -0.295769 -0.908318 -0.295769 1.666809
+            children [
+ Inline { url "6590-4227155_solid_p1.wrl" }
+] }
+
+DEF Member_2_7 Transform { translation 32.360484 -0.000000 -12.000000
+            rotation 0.309621 0.950860 0.000000 3.141593
+            children [
+ Inline { url "87083-6083620_model_p1.wrl" }
+] }
+
+DEF Member_2_8 Transform { translation 32.360484 -0.000000 -32.000000
+            rotation 0.000000 0.000000 1.000000 0.904804
+            children [
+ Inline { url "32316-4142132_model_p1.wrl" }
+] }
+
+DEF Member_2_9 Transform { translation 32.360484 0.000000 -16.000000
+            rotation -0.000000 0.000000 -1.000000 0.904804
+            children [
+ Inline { url "32316-4142132_model_p1.wrl" }
+] }
+
+DEF Member_2_10 Transform { translation 52.131359 -25.161727 -24.000000
+            rotation 0.219905 0.975521 0.000000 3.141593
+            children [
+ Inline { url "6629-4254591_model_p1.wrl" }
+] }
+
+DEF Member_2_11 Transform { translation 52.131359 25.161727 -24.000000
+            rotation 0.000000 0.000000 1.000000 3.585026
+            children [
+ Inline { url "6629-4254591_model_p1.wrl" }
+] }
+
+DEF Member_2_12 Transform { translation 16.000000 8.000000 -16.000000
+            rotation 0.000000 0.000000 -1.000000 1.570796
+            children [
+ Inline { url "32523-4142822_model_p1.wrl" }
+] }
+
+DEF Member_2_13 Transform { translation 16.000000 8.000000 -4.250000
+            rotation -0.195284 0.980747 0.000000 3.141593
+            children [
+ Inline { url "87083-6083620_model_p1.wrl" }
+] }
+
+DEF Member_2_14 Transform { translation 16.000000 -8.000000 -4.250000
+            rotation -0.195284 0.980747 0.000000 3.141593
+            children [
+ Inline { url "87083-6083620_model_p1.wrl" }
+] }
+
+DEF Member_2_15 Transform { translation 16.000000 8.000000 -8.000000
+            rotation 0.000000 0.000000 -1.000000 1.570796
+            children [
+ Inline { url "48989-4227899_model_p1.wrl" }
+] }
+
+DEF Member_2_16 Transform { translation 8.000000 4.000000 -32.000000
+            rotation 0.000000 0.707107 0.707107 3.141593
+            children [
+ Inline { url "63869-6007966_model_p1.wrl" }
+] }
+
+DEF Member_2_17 Transform { translation 4.000000 -16.000000 -8.000000
+            rotation 0.577350 -0.577350 -0.577350 2.094395
+            children [
+ Inline { url "2780-4121715_model_p1.wrl" }
+] }
+
+DEF Member_2_18 Transform { translation 8.000000 16.000000 -8.000000
+            rotation 0.577350 -0.577350 0.577350 4.188790
+            children [
+ Inline { url "32316-4142132_model_p1.wrl" }
+] }
+
+DEF Member_2_19 Transform { translation 4.000000 16.000000 -8.000000
+            rotation 0.577350 0.577350 -0.577350 4.188790
+            children [
+ Inline { url "2780-4121715_model_p1.wrl" }
+] }
+

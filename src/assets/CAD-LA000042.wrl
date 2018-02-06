@@ -1,0 +1,22 @@
+#VRML V2.0 utf8
+
+DirectionalLight {
+ direction 0.577 -0.577 -0.577
+ color    1.000 1.000 1.000
+ intensity 0.450
+ ambientIntensity 1.0
+}
+
+DirectionalLight {
+ direction -0.577 -0.577 -0.577
+ color    1.000 1.000 1.000
+ intensity 0.680
+ ambientIntensity 1.0
+}
+
+DEF Member_0_0 Transform { translation 0.000000 0.000000 0.000000
+            rotation 0.000000 0.000000 0.000000 0.000000
+            children [
+ Inline { url "cad-la000042_a.wrl" }
+] }
+
