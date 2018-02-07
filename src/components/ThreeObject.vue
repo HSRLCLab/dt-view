@@ -10,6 +10,7 @@ div.threeObject(
 		| {{object.name}}
 	ThreeObject(
 		v-for="child in object.children"
+		:key="object.uuid"
 		:object="child"
 	)
 </template>

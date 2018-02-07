@@ -11,17 +11,8 @@ import * as THREE from 'three';
 window.THREE = THREE;
 require('imports-loader?THREE=three!three/examples/js/controls/OrbitControls');
 require('imports-loader?THREE=three!../three/FBXLoader');
-require('imports-loader?THREE=three!three/examples/js/loaders/VRMLLoader');
 
-import model1 from 'file-loader!../assets/32184-4211621.wrl';
-import model2 from 'file-loader!../assets/CAD-LA000053.wrl';
-import model3 from 'file-loader!../assets/CAD-LA000042.wrl';
-import modelHouse from 'file-loader!../assets/house.wrl';
-import model24 from 'file-loader!../assets/24.wrl';
-import modelPly from 'file-loader!../assets/greifer.ply';
-import greiferWrl from 'file-loader!../assets/greifer.ply';
-import traegerFBX from 'file-loader!../assets/traeger1.FBX';
-import greiferFBX from 'file-loader!../assets/lessgreiferparts.FBX';
+import model from 'file-loader!../assets/greiferReduced.FBX';
 
 var renderer, scene, camera;
 
@@ -54,7 +45,7 @@ export default {
 
     var loader = new THREE.FBXLoader();
     loader.load(
-      greiferFBX,
+      model,
       object => {
         this.$emit('onModelLoaded', object);
         scene.add(object);
