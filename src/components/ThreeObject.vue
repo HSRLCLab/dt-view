@@ -10,7 +10,7 @@ div.threeObject(
 		| {{object.name}}
 	ThreeObject(
 		v-for="child in object.children"
-		:key="object.uuid"
+		:key="child.uuid"
 		:object="child"
 	)
 </template>
@@ -20,9 +20,6 @@ export default {
   name: 'ThreeObject',
   props: {
     object: Object
-  },
-  mounted() {
-    console.log(this.object);
   }
 };
 </script>
