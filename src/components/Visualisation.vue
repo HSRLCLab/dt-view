@@ -6,7 +6,13 @@ div.visualisation(
 
 <script>
 /*eslint no-unused-vars: "off", no-undef: "off"*/
+require('imports-loader?this=>window!three/examples/js/libs/inflate.min.js');
 import * as THREE from 'three';
+window.THREE = THREE;
+require('imports-loader?THREE=three!three/examples/js/controls/OrbitControls');
+require('imports-loader?THREE=three!../three/FBXLoader');
+require('imports-loader?THREE=three!three/examples/js/loaders/VRMLLoader');
+
 import model1 from 'file-loader!../assets/32184-4211621.wrl';
 import model2 from 'file-loader!../assets/CAD-LA000053.wrl';
 import model3 from 'file-loader!../assets/CAD-LA000042.wrl';
@@ -14,15 +20,14 @@ import modelHouse from 'file-loader!../assets/house.wrl';
 import model24 from 'file-loader!../assets/24.wrl';
 import modelPly from 'file-loader!../assets/greifer.ply';
 import greiferWrl from 'file-loader!../assets/greifer.ply';
+import traegerFBX from 'file-loader!../assets/traeger1.FBX';
+import greiferFBX from 'file-loader!../assets/lessgreiferparts.FBX';
 
-window.THREE = THREE;
-require('three/examples/js/controls/OrbitControls');
-require('three/examples/js/loaders/VRMLLoader');
-require('three/examples/js/loaders/FBXLoader');
 var renderer, scene, camera;
 
 export default {
   name: 'Visualisation',
+  props: {},
   mounted() {
     const ref = this.$refs.three;
     const { clientHeight: height, clientWidth: width } = ref;
@@ -43,10 +48,20 @@ export default {
     camera.add(dirLight.target);
     // scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
-    const loader = new THREE.VRMLLoader();
-    loader.load(model1, function(object) {
-      scene.add(object);
-    });
+    var gridHelper = new THREE.GridHelper(28, 28, 0x303030, 0x303030);
+    gridHelper.position.set(0, 0, 0);
+    scene.add(gridHelper);
+
+    var loader = new THREE.FBXLoader();
+    loader.load(
+      greiferFBX,
+      object => {
+        this.$emit('onModelLoaded', object);
+        scene.add(object);
+      },
+      x => console.log(`${Math.round(x.loaded / x.total * 100)}% downloaded`),
+      e => console.error(e)
+    );
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);

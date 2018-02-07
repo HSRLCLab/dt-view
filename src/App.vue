@@ -1,14 +1,19 @@
-<template>
-  <div id="app">
-    <Visualisation @detailSelected="detailSelected"/>
-    <Details :details="details"/>
-  </div>
+<template lang="pug">
+div(id="app")
+  Visualisation(
+    @onDetailSelected="onDetailSelected"
+    @onModelLoaded="onModelLoaded"
+  )
+  Details(
+    :details="details"
+    :model="model"
+  )
 </template>
 
 <script>
 import 'normalize.css';
-import Visualisation from './components/Visualisation.vue';
-import Details from './components/Details.vue';
+import Visualisation from './components/Visualisation';
+import Details from './components/Details';
 
 export default {
   name: 'app',
@@ -19,7 +24,8 @@ export default {
         { text: 'detail 2' },
         { text: 'detail 3' },
         { text: 'detail 4' }
-      ]
+      ],
+      model: null
     };
   },
   components: {
@@ -27,7 +33,10 @@ export default {
     Details
   },
   methods: {
-    detailSelected(event) {
+    onModelLoaded(model) {
+      this.model = model;
+    },
+    onDetailSelected(event) {
       console.log('test>', event);
     }
   }
@@ -51,7 +60,7 @@ body {
 <style lang="scss" scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  color: #2c3e50;
+  color: #111111;
   display: grid;
   grid-template-areas: 'visualisation details';
   grid-template-columns: 1fr 1fr;

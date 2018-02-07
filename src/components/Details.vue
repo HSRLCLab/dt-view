@@ -1,14 +1,25 @@
 <template lang="pug">
 div.details
-	ul
-		li(v-for="detail in details") {{detail.text}}
+  ul
+    li(v-for="detail in details") {{detail.text}}
+  div
+    ThreeObject(
+      v-if="model"
+      :object="model"
+    )
 </template>
 
 <script>
+import ThreeObject from './ThreeObject';
+
 export default {
-  name: "Details",
+  name: 'Details',
   props: {
-    details: Array
+    details: Array,
+    model: Object
+  },
+  components: {
+    ThreeObject
   }
 };
 </script>

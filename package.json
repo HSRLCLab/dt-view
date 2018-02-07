@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "imports-loader": "^0.7.1",
     "normalize.css": "^7.0.0",
     "three": "^0.89.0",
     "vue": "^2.5.13"
