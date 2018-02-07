@@ -27,5 +27,6 @@ export default {
 <style lang="scss" scoped>
 .details {
   grid-area: details;
+  overflow-y: scroll;
 }
 </style>

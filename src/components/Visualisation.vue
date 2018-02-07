@@ -26,7 +26,7 @@ export default {
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100000);
     camera.position.z = 10;
 
-    const controls = new THREE.OrbitControls(camera);
+    const controls = new THREE.OrbitControls(camera, ref);
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xdddddd);

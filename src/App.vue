@@ -51,7 +51,7 @@ html {
 
 body {
   margin: 0;
-  overflow-y: scroll;
+  overflow-y: hidden;
   height: 100%;
 }
 </style>
