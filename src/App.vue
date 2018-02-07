@@ -17,17 +17,6 @@ import Details from './components/Details';
 
 export default {
   name: 'app',
-  data() {
-    return {
-      details: [
-        { text: 'detail 1' },
-        { text: 'detail 2' },
-        { text: 'detail 3' },
-        { text: 'detail 4' }
-      ],
-      model: null
-    };
-  },
   components: {
     Visualisation,
     Details
@@ -39,6 +28,9 @@ export default {
     onDetailSelected(event) {
       console.log('test>', event);
     }
+  },
+  watch: {
+    model: {}
   }
 };
 </script>

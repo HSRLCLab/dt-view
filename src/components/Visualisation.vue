@@ -12,9 +12,10 @@ window.THREE = THREE;
 require('imports-loader?THREE=three!three/examples/js/controls/OrbitControls');
 require('imports-loader?THREE=three!../three/FBXLoader');
 
+import { mapGetters, mapMutations } from 'vuex';
 import model from 'file-loader!../assets/greiferReduced.FBX';
 
-var renderer, scene, camera;
+let renderer, scene, camera;
 
 export default {
   name: 'Visualisation',
@@ -27,6 +28,7 @@ export default {
     camera.position.z = 10;
 
     const controls = new THREE.OrbitControls(camera, ref);
+    controls.addEventListener('change', this.render);
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xdddddd);
@@ -39,16 +41,16 @@ export default {
     camera.add(dirLight.target);
     // scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
-    var gridHelper = new THREE.GridHelper(28, 28, 0x303030, 0x303030);
+    const gridHelper = new THREE.GridHelper(28, 28, 0x303030, 0x303030);
     gridHelper.position.set(0, 0, 0);
     scene.add(gridHelper);
 
-    var loader = new THREE.FBXLoader();
+    const loader = new THREE.FBXLoader();
     loader.load(
       model,
-      object => {
-        this.$emit('onModelLoaded', object);
-        scene.add(object);
+      model => {
+        this.setModel(model);
+        scene.add(model);
       },
       x => console.log(`${Math.round(x.loaded / x.total * 100)}% downloaded`),
       e => console.error(e)
@@ -60,18 +62,33 @@ export default {
 
     ref.appendChild(renderer.domElement);
 
-    this.animate();
+    // this.animate();
 
     window.scene = scene;
     window.camera = camera;
     window.renderer = renderer;
   },
+  computed: {
+    ...mapGetters({
+      model: 'model'
+    })
+  },
+  watch: {
+    // render if model changed
+    model(newModel, oldModel) {
+      this.render();
+    }
+  },
   methods: {
+    ...mapMutations(['setModel']),
     detailSelected(event) {
       this.$emit('detailSelected', event);
     },
     animate() {
       requestAnimationFrame(this.animate);
+      this.render();
+    },
+    render() {
       renderer.render(scene, camera);
     }
   }
