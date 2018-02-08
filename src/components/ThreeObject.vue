@@ -8,7 +8,7 @@ div.threeObject
 			type="checkbox"
 			v-model="visible"
 		)
-		| {{object.name}}
+		| {{object.cleanName}}
 	ThreeObject(
 		v-for="child in childrenNotMesh"
 		:key="child.id"
@@ -44,7 +44,6 @@ export default {
   methods: {
     ...mapMutations(['objectSelected']),
     selectObject() {
-      console.log('selected', this);
       this.objectSelected(this.object);
     }
   }
@@ -57,14 +56,15 @@ export default {
   margin-top: 5px;
   .singleObject {
     background: #cccccc;
+    color: #222222;
     padding: 2px 4px 2px 2px;
     display: inline-block;
     line-height: 20px;
     margin-left: -20px;
     cursor: pointer;
     &.selected {
-      background: #001f3f;
-      color: white;
+      background: #ffdc00;
+      color: #111111;
     }
     input {
       height: 20px;

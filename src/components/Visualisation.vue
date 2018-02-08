@@ -120,7 +120,7 @@ export default {
       if (firstIntersectingObject) {
         this.objectSelected(firstIntersectingObject.object.parent.userData.storeObject);
       } else {
-        this.nothingSelected();
+        // this.nothingSelected();
       }
     }
   }

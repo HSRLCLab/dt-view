@@ -2,12 +2,13 @@
 div.details
   h1 DigitalTwin
   hr
-  section(v-if="selected")
-    h2 Selected element
+  section(v-if="selectedObject")
+    h2 Selected element: 
+      span {{selectedObject.cleanName}}
   //- Selected (insert stuff :D)
   //- ul
   //-   li(v-for="detail in details") {{detail.text}}
-  section
+  section(v-if="treeRootObjects")
     h2 CAD-Tree
     ThreeObject(
       v-if="treeRootObjects"
@@ -27,7 +28,7 @@ export default {
     ThreeObject
   },
   computed: {
-    ...mapState(['selected']),
+    ...mapState(['selectedObject']),
     ...mapGetters(['treeRootObjects'])
   }
 };
