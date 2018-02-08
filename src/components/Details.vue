@@ -1,25 +1,34 @@
 <template lang="pug">
 div.details
-  ul
-    li(v-for="detail in details") {{detail.text}}
-  div
+  h1 DigitalTwin
+  hr
+  section(v-if="selected")
+    h2 Selected element
+  //- Selected (insert stuff :D)
+  //- ul
+  //-   li(v-for="detail in details") {{detail.text}}
+  section
+    h2 CAD-Tree
     ThreeObject(
-      v-if="model"
-      :object="model"
+      v-if="treeRootObjects"
+      v-for="object in treeRootObjects"
+      :key="object.id"
+      :object="object"
     )
 </template>
 
 <script>
 import ThreeObject from './ThreeObject';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Details',
-  props: {
-    details: Array,
-    model: Object
-  },
   components: {
     ThreeObject
+  },
+  computed: {
+    ...mapState(['selected']),
+    ...mapGetters(['treeRootObjects'])
   }
 };
 </script>
@@ -28,5 +37,6 @@ export default {
 .details {
   grid-area: details;
   overflow-y: scroll;
+  padding: 0 20px 20px;
 }
 </style>

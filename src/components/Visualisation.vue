@@ -1,6 +1,7 @@
 <template lang="pug">
 div.visualisation(
   ref="three"
+  @click="threeCanvasClicked"
 )
 </template>
 
@@ -12,21 +13,29 @@ window.THREE = THREE;
 require('imports-loader?THREE=three!three/examples/js/controls/OrbitControls');
 require('imports-loader?THREE=three!../three/FBXLoader');
 
+import { mapMutations, mapState } from 'vuex';
 import model from 'file-loader!../assets/greiferReduced.FBX';
 
-var renderer, scene, camera;
+let renderer, scene, camera, ref, raycaster;
+const treeToThree = new Map();
 
 export default {
   name: 'Visualisation',
-  props: {},
+  created() {
+    window.addEventListener('resize', this.windowResized, false);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.windowResized, false);
+  },
   mounted() {
-    const ref = this.$refs.three;
+    ref = this.$refs.three;
     const { clientHeight: height, clientWidth: width } = ref;
 
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100000);
     camera.position.z = 10;
 
     const controls = new THREE.OrbitControls(camera, ref);
+    controls.addEventListener('change', this.render);
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xdddddd);
@@ -39,16 +48,16 @@ export default {
     camera.add(dirLight.target);
     // scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
-    var gridHelper = new THREE.GridHelper(28, 28, 0x303030, 0x303030);
+    const gridHelper = new THREE.GridHelper(28, 28, 0x303030, 0x303030);
     gridHelper.position.set(0, 0, 0);
     scene.add(gridHelper);
 
-    var loader = new THREE.FBXLoader();
+    const loader = new THREE.FBXLoader();
     loader.load(
       model,
-      object => {
-        this.$emit('onModelLoaded', object);
-        scene.add(object);
+      model => {
+        scene.add(model);
+        this.setObjectTree(model);
       },
       x => console.log(`${Math.round(x.loaded / x.total * 100)}% downloaded`),
       e => console.error(e)
@@ -58,21 +67,61 @@ export default {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
 
-    ref.appendChild(renderer.domElement);
+    raycaster = new THREE.Raycaster();
 
-    this.animate();
+    ref.appendChild(renderer.domElement);
 
     window.scene = scene;
     window.camera = camera;
     window.renderer = renderer;
+
+    this.$store.watch(
+      state => state.objectTree,
+      () => {
+        this.render();
+      },
+      {
+        deep: true
+      }
+    );
+  },
+  computed: {
+    ...mapState(['objectTree'])
   },
   methods: {
-    detailSelected(event) {
-      this.$emit('detailSelected', event);
-    },
+    ...mapMutations(['setObjectTree', 'objectSelected', 'nothingSelected']),
     animate() {
       requestAnimationFrame(this.animate);
+      this.render();
+    },
+    render() {
       renderer.render(scene, camera);
+    },
+    windowResized() {
+      const { clientHeight: height, clientWidth: width } = ref;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      this.render();
+    },
+    threeCanvasClicked(e) {
+      if (!raycaster) return;
+      if (!ref) return;
+
+      const { clientHeight: height, clientWidth: width } = ref;
+      const { offsetX: x, offsetY: y } = e;
+      const mouse = new THREE.Vector2(x / width * 2 - 1, -(y / height) * 2 + 1);
+
+      raycaster.setFromCamera(mouse, camera);
+      const firstIntersectingObject = raycaster.intersectObjects(
+        this.$store.state.objectTree.threeObject.children,
+        true
+      )[0];
+      if (firstIntersectingObject) {
+        this.objectSelected(firstIntersectingObject.object.parent.userData.storeObject);
+      } else {
+        this.nothingSelected();
+      }
     }
   }
 };
