@@ -37,6 +37,6 @@ export default {
 .details {
   grid-area: details;
   overflow-y: scroll;
-  padding: 0 20px;
+  padding: 0 20px 20px;
 }
 </style>

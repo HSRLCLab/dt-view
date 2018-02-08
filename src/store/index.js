@@ -6,7 +6,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     objectTree: null,
-    selected: null
+    selectedObject: null
   },
   getters: {
     treeRootObjects: state => {
@@ -18,11 +18,13 @@ const store = new Vuex.Store({
     setObjectTree(state, model) {
       state.objectTree = getObjectTree(model);
     },
-    setSelected(store, selected) {
-      store.selected = selected;
+    objectSelected(store, object) {
+      store.selectedObject = object;
+    },
+    nothingSelected(store) {
+      store.selectedObject = null;
     },
     setVisibility(state, { object, visible }) {
-      console.log(object, visible);
       if (!object) return;
       object.visible = visible;
     }
@@ -35,8 +37,9 @@ function getObjectTree(model) {
     id: model.uuid,
     name: model.name,
     type: model.type,
+    _visible: model.visible,
     get isSelected() {
-      return store.state.selected == this;
+      return store.state.selectedObject == this;
     },
     children: model.children.map(c => getObjectTree(c))
   };
@@ -45,12 +48,15 @@ function getObjectTree(model) {
   });
   Object.defineProperty(object, 'visible', {
     get() {
-      return this.threeObject.visible;
+      return this._visible;
     },
     set(visible) {
       this.threeObject.visible = visible;
+      // update prop so vue knows that model changed
+      this._visible = visible;
     }
   });
+  object.threeObject.userData.storeObject = object;
   return object;
 }
 
