@@ -5,12 +5,12 @@ div.threeObject(
 	label
 		input(
 			type="checkbox"
-			v-model="object.visible"
+			v-model="objectVisibility"
 		)
 		| {{object.name}}
 	ThreeObject(
 		v-for="child in object.children"
-		:key="child.uuid"
+		:key="child.id"
 		:object="child"
 	)
 </template>
@@ -20,6 +20,19 @@ export default {
   name: 'ThreeObject',
   props: {
     object: Object
+  },
+  computed: {
+    objectVisibility: {
+      get() {
+        return this.object.visible;
+      },
+      set(value) {
+        this.$store.commit('setVisibility', {
+          object: this.object,
+          visible: value
+        });
+      }
+    }
   }
 };
 </script>
@@ -33,6 +46,7 @@ export default {
     padding: 2px 4px 2px 2px;
     display: inline-block;
     line-height: 20px;
+    margin-left: -20px;
     input {
       height: 20px;
       width: 20px;

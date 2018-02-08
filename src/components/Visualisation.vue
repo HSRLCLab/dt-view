@@ -12,16 +12,22 @@ window.THREE = THREE;
 require('imports-loader?THREE=three!three/examples/js/controls/OrbitControls');
 require('imports-loader?THREE=three!../three/FBXLoader');
 
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import model from 'file-loader!../assets/greiferReduced.FBX';
 
-let renderer, scene, camera;
+let renderer, scene, camera, ref;
+const treeToThree = new Map();
 
 export default {
   name: 'Visualisation',
-  props: {},
+  created() {
+    window.addEventListener('resize', this.windowResized, false);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.windowResized, false);
+  },
   mounted() {
-    const ref = this.$refs.three;
+    ref = this.$refs.three;
     const { clientHeight: height, clientWidth: width } = ref;
 
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100000);
@@ -49,8 +55,12 @@ export default {
     loader.load(
       model,
       model => {
-        this.setModel(model);
+        this.setObjectTree(model);
         scene.add(model);
+        this.$store.watch(state => state.objectTree, (newValue, oldValue) => this.render(), {
+          deep: true
+        });
+        this.render();
       },
       x => console.log(`${Math.round(x.loaded / x.total * 100)}% downloaded`),
       e => console.error(e)
@@ -62,34 +72,28 @@ export default {
 
     ref.appendChild(renderer.domElement);
 
-    // this.animate();
-
     window.scene = scene;
     window.camera = camera;
     window.renderer = renderer;
   },
   computed: {
-    ...mapGetters({
-      model: 'model'
-    })
-  },
-  watch: {
-    // render if model changed
-    model(newModel, oldModel) {
-      this.render();
-    }
+    ...mapState(['objectTree'])
   },
   methods: {
-    ...mapMutations(['setModel']),
-    detailSelected(event) {
-      this.$emit('detailSelected', event);
-    },
+    ...mapMutations(['setObjectTree']),
     animate() {
       requestAnimationFrame(this.animate);
       this.render();
     },
     render() {
       renderer.render(scene, camera);
+    },
+    windowResized() {
+      const { clientHeight: height, clientWidth: width } = ref;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      this.render();
     }
   }
 };

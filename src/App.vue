@@ -1,13 +1,7 @@
 <template lang="pug">
 div(id="app")
-  Visualisation(
-    @onDetailSelected="onDetailSelected"
-    @onModelLoaded="onModelLoaded"
-  )
-  Details(
-    :details="details"
-    :model="model"
-  )
+  Visualisation
+  Details
 </template>
 
 <script>
@@ -20,17 +14,6 @@ export default {
   components: {
     Visualisation,
     Details
-  },
-  methods: {
-    onModelLoaded(model) {
-      this.model = model;
-    },
-    onDetailSelected(event) {
-      console.log('test>', event);
-    }
-  },
-  watch: {
-    model: {}
   }
 };
 </script>
