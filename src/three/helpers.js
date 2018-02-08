@@ -1,6 +1,6 @@
-import { Color, MeshPhongMaterial } from 'three';
+import { Color, MeshToonMaterial } from 'three';
 
-const selectedMaterial = new MeshPhongMaterial();
+const selectedMaterial = new MeshToonMaterial();
 selectedMaterial.color = new Color(0xffdc00);
 
 export { selectedMaterial };
