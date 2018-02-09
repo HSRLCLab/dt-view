@@ -1,6 +1,7 @@
 <template lang="pug">
 div.visualisation(
   ref="three"
+  @mousedown="e => { mouseDownPos = { x: e.offsetX, y: e.offsetY }; }"
   @click="threeCanvasClicked"
 )
 </template>
@@ -21,6 +22,14 @@ const treeToThree = new Map();
 
 export default {
   name: 'Visualisation',
+  data() {
+    return {
+      mouseDownPos: {
+        x: 0,
+        y: 0
+      }
+    };
+  },
   created() {
     window.addEventListener('resize', this.windowResized, false);
   },
@@ -108,8 +117,13 @@ export default {
       if (!raycaster) return;
       if (!ref) return;
 
-      const { clientHeight: height, clientWidth: width } = ref;
       const { offsetX: x, offsetY: y } = e;
+
+      // don't continue if mouse moved since mouse down
+      const absDiff = (v1, v2) => Math.abs(v1 - v2);
+      if (absDiff(this.mouseDownPos.x, x) > 2 || absDiff(this.mouseDownPos.y, y) > 2) return;
+
+      const { clientHeight: height, clientWidth: width } = ref;
       const mouse = new THREE.Vector2(x / width * 2 - 1, -(y / height) * 2 + 1);
 
       raycaster.setFromCamera(mouse, camera);
