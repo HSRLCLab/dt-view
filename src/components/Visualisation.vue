@@ -18,7 +18,6 @@ import { mapMutations, mapState } from 'vuex';
 import model from 'file-loader!../assets/greiferReduced.FBX';
 
 let renderer, scene, camera, ref, raycaster;
-const treeToThree = new Map();
 
 export default {
   name: 'Visualisation',
